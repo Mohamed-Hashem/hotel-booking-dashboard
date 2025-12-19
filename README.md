@@ -9,7 +9,7 @@ A high-performance, accessible, and feature-rich React dashboard for searching a
 
 ## ✨ Live Demo
 
-[View Demo](https://github.com/Mohamed-Hashem/hotel-booking-dashboard) | [Report Bug](https://github.com/Mohamed-Hashem/hotel-booking-dashboard/issues)
+[View Demo](https://hotel-booking-dashboard-neon.vercel.app/)
 
 ---
 
