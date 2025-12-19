@@ -1,0 +1,8 @@
+# Hotel Booking Dashboard
+# https://developers.google.com/search/docs/crawling-indexing/robots/intro
+
+User-agent: *
+Allow: /
+
+# Sitemap location (for production)
+# Sitemap: https://yourdomain.com/sitemap.xml

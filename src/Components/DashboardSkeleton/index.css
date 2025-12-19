@@ -1,0 +1,21 @@
+.skeleton-mode {
+  pointer-events: none;
+  user-select: none;
+}
+
+.skeleton-mode .filter-panel,
+.skeleton-mode .controls-panel,
+.skeleton-mode .hotel-card {
+  box-shadow: none;
+  border-color: transparent;
+}
+
+/* Table Skeleton Styles */
+.hotels-table td .skeleton-line {
+  margin-bottom: 0;
+}
+
+/* Ensure the skeleton dashboard matches the real one's padding/max-width */
+.dashboard.skeleton-mode {
+  opacity: 0.8;
+}
