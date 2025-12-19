@@ -156,7 +156,7 @@
 
 .filter-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--spacing-lg);
   align-items: start;
 }
@@ -166,12 +166,6 @@
   flex-direction: column;
   gap: var(--spacing-xs);
   min-width: 0;
-}
-
-.filter-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
 }
 
 .filter-group label {
@@ -248,16 +242,13 @@
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
-}
-
-.date-inputs {
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 }
 
 .price-inputs input,
 .date-inputs input {
   flex: 1;
-  min-width: 0;
+  min-width: 80px;
 }
 
 .price-separator,
@@ -286,8 +277,8 @@
 }
 
 .amenities-checkboxes {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: var(--spacing-sm);
 }
 
@@ -682,6 +673,87 @@
    RESPONSIVE DESIGN
    ============================================================================ */
 
+/* Tablet landscape and smaller desktops */
+@media (max-width: 1200px) {
+  .filter-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-header h1 {
+    font-size: 2rem;
+  }
+
+  .dashboard-header .subtitle {
+    font-size: 1rem;
+  }
+
+  .filter-panel {
+    padding: var(--spacing-md);
+  }
+
+  .filter-header h2 {
+    font-size: 1.125rem;
+  }
+
+  .filter-group label {
+    font-size: 0.8125rem;
+  }
+
+  .filter-group input[type="text"],
+  .filter-group input[type="number"],
+  .filter-group input[type="date"],
+  .filter-group select {
+    padding: 0.625rem var(--spacing-sm);
+    font-size: 0.8125rem;
+  }
+
+  .checkbox-label {
+    font-size: 0.8125rem;
+  }
+
+  .hotel-card {
+    padding: var(--spacing-md);
+  }
+
+  .hotel-card-header h3 {
+    font-size: 1rem;
+  }
+}
+
+/* Tablet portrait */
+@media (max-width: 900px) {
+  .dashboard {
+    padding: var(--spacing-md);
+  }
+
+  .filter-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+  }
+
+  .filter-panel {
+    padding: var(--spacing-md);
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.875rem;
+  }
+
+  .filter-header h2 {
+    font-size: 1rem;
+  }
+
+  .controls-panel {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .btn {
+    font-size: 0.8125rem;
+    padding: 0.5rem var(--spacing-sm);
+  }
+}
+
+/* Mobile landscape and large phones */
 @media (max-width: 768px) {
   .dashboard {
     padding: var(--spacing-md);
@@ -697,6 +769,16 @@
 
   .amenities-group {
     grid-column: 1;
+  }
+
+  .filter-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
+
+  .filter-header .btn {
+    width: 100%;
   }
 
   .controls-panel {
@@ -759,6 +841,50 @@
 
   .hotels-table td:last-child {
     border-bottom: none;
+  }
+}
+
+/* Small mobile phones */
+@media (max-width: 480px) {
+  .dashboard {
+    padding: var(--spacing-sm);
+  }
+
+  .filter-panel {
+    padding: var(--spacing-sm);
+  }
+
+  .dashboard-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .dashboard-header .subtitle {
+    font-size: 1rem;
+  }
+
+  .amenities-checkboxes {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  }
+
+  .checkbox-label {
+    font-size: 0.75rem;
+    padding: var(--spacing-xs);
+  }
+
+  .price-inputs input,
+  .date-inputs input {
+    min-width: 60px;
+    font-size: 0.75rem;
+  }
+
+  .pagination-controls button {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 0.75rem;
+  }
+
+  .btn {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 0.8rem;
   }
 }
 
