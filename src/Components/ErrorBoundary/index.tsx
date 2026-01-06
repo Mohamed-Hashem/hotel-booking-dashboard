@@ -5,7 +5,7 @@ import React, {
   useState,
   type ReactNode,
 } from "react";
-import "./ErrorBoundary.css";
+import "./index.css";
 
 interface ErrorBoundaryProps {
   children: ReactNode;

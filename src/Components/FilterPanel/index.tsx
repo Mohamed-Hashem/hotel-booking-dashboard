@@ -1,14 +1,19 @@
 import React, { memo } from "react";
-import type { Filters } from "../../types";
+import type { Filters, Hotel } from "../../types";
 import { ALL_AMENITIES } from "../../types";
 import { FILTER_PRICE_RANGE } from "../../hooks/useHotelFilters";
+import SearchInput from "../SearchInput";
 
 interface FilterPanelProps {
   filters: Filters;
   activeFilterCount: number;
   dateError: string | null;
   isLoading: boolean;
-  onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  searchValue: string;
+  baseHotels: Hotel[];
+  onSearchValueChange: (value: string) => void;
+  onSearchResults: (results: Hotel[]) => void;
+  onSearchingChange?: (isSearching: boolean) => void;
   onMinPriceChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onMaxPriceChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onRatingChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -25,7 +30,11 @@ const FilterPanel = memo<FilterPanelProps>(
     activeFilterCount,
     dateError,
     isLoading,
-    onSearchChange,
+    searchValue,
+    baseHotels,
+    onSearchValueChange,
+    onSearchResults,
+    onSearchingChange,
     onMinPriceChange,
     onMaxPriceChange,
     onRatingChange,
@@ -60,23 +69,14 @@ const FilterPanel = memo<FilterPanelProps>(
       </div>
 
       <div className="filter-grid">
-        <div className="filter-group">
-          <label htmlFor="search-input">Search</label>
-          <div className="input-wrapper">
-            <input
-              id="search-input"
-              type="text"
-              placeholder="Hotel name or city..."
-              value={filters.search}
-              onChange={onSearchChange}
-              aria-describedby="search-help"
-            />
-            {isLoading && <span className="input-spinner" aria-hidden="true" />}
-          </div>
-          <small id="search-help" className="help-text">
-            Search by hotel name or city
-          </small>
-        </div>
+        <SearchInput
+          value={searchValue}
+          baseHotels={baseHotels}
+          onValueChange={onSearchValueChange}
+          onResults={onSearchResults}
+          onSearchingChange={onSearchingChange}
+          isPending={isLoading}
+        />
 
         <div className="filter-group">
           <label>Price Range</label>
