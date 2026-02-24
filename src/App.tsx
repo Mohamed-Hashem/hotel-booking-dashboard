@@ -53,7 +53,7 @@ const HotelBookingDashboard: React.FC = () => {
       const hasAmenities = matchesAmenities(
         hotel.amenities,
         filters.amenities,
-        filters.amenityLogic
+        filters.amenityLogic,
       );
 
       const inDateRange =
@@ -95,7 +95,7 @@ const HotelBookingDashboard: React.FC = () => {
       setFilter("search", value);
       startTransition(() => setCurrentPage(1));
     },
-    [setFilter]
+    [setFilter],
   );
 
   const handleMinPriceChange = useCallback(
@@ -106,21 +106,21 @@ const HotelBookingDashboard: React.FC = () => {
         setCurrentPage(1);
       });
     },
-    [setFilter]
+    [setFilter],
   );
 
   const handleMaxPriceChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = Math.max(
         0,
-        Number(e.target.value) || FILTER_PRICE_RANGE.max
+        Number(e.target.value) || FILTER_PRICE_RANGE.max,
       );
       startTransition(() => {
         setFilter("maxPrice", value);
         setCurrentPage(1);
       });
     },
-    [setFilter]
+    [setFilter],
   );
 
   const handleRatingChange = useCallback(
@@ -130,20 +130,21 @@ const HotelBookingDashboard: React.FC = () => {
         setCurrentPage(1);
       });
     },
-    [setFilter]
+    [setFilter],
   );
 
   const handleAmenityToggle = useCallback(
     (amenity: string) => {
-      const newAmenities = filters.amenities.includes(amenity)
-        ? filters.amenities.filter((a) => a !== amenity)
-        : [...filters.amenities, amenity];
       startTransition(() => {
-        setFilter("amenities", newAmenities);
+        setFilter("amenities", (prev: string[]) =>
+          prev.includes(amenity)
+            ? prev.filter((a) => a !== amenity)
+            : [...prev, amenity],
+        );
         setCurrentPage(1);
       });
     },
-    [filters.amenities, setFilter]
+    [setFilter],
   );
 
   const handleAmenityLogicChange = useCallback(
@@ -153,7 +154,7 @@ const HotelBookingDashboard: React.FC = () => {
         setCurrentPage(1);
       });
     },
-    [setFilter]
+    [setFilter],
   );
 
   const handleStartDateChange = useCallback(
@@ -163,7 +164,7 @@ const HotelBookingDashboard: React.FC = () => {
         setCurrentPage(1);
       });
     },
-    [setFilter]
+    [setFilter],
   );
 
   const handleEndDateChange = useCallback(
@@ -173,7 +174,7 @@ const HotelBookingDashboard: React.FC = () => {
         setCurrentPage(1);
       });
     },
-    [setFilter]
+    [setFilter],
   );
 
   const handleSortFieldChange = useCallback((field: SortField) => {
@@ -189,7 +190,7 @@ const HotelBookingDashboard: React.FC = () => {
     (e: React.ChangeEvent<HTMLSelectElement>) => {
       setSortState((prev) => ({ ...prev, order: e.target.value as SortOrder }));
     },
-    []
+    [],
   );
 
   const handleSecondarySortChange = useCallback(
@@ -200,7 +201,7 @@ const HotelBookingDashboard: React.FC = () => {
         secondary: value ? (value as SortField) : undefined,
       }));
     },
-    []
+    [],
   );
 
   const handlePageChange = useCallback((page: number) => {

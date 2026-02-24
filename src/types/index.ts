@@ -38,7 +38,10 @@ export type DateError = "invalid-range" | "invalid-format" | null;
 
 export interface UseHotelFiltersReturn {
   filters: Filters;
-  setFilter: <K extends keyof Filters>(key: K, value: Filters[K]) => void;
+  setFilter: <K extends keyof Filters>(
+    key: K,
+    value: Filters[K] | ((prev: Filters[K]) => Filters[K]),
+  ) => void;
   clearFilters: () => void;
   activeFilterCount: number;
   dateError: DateError;

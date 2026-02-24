@@ -173,7 +173,7 @@ export function useHotelFilters(): UseHotelFiltersReturn {
 
   const dateError = useMemo(
     () => validateDateRange(filters.startDate, filters.endDate),
-    [filters.startDate, filters.endDate]
+    [filters.startDate, filters.endDate],
   );
 
   const activeFilterCount = useMemo(() => {
@@ -196,10 +196,19 @@ export function useHotelFilters(): UseHotelFiltersReturn {
   }, [filters]);
 
   const setFilter = useCallback(
-    <K extends keyof Filters>(key: K, value: Filters[K]) => {
-      setFilters((prev) => ({ ...prev, [key]: value }));
+    <K extends keyof Filters>(
+      key: K,
+      value: Filters[K] | ((prev: Filters[K]) => Filters[K]),
+    ) => {
+      setFilters((prev) => ({
+        ...prev,
+        [key]:
+          typeof value === "function"
+            ? (value as (p: Filters[K]) => Filters[K])(prev[key])
+            : value,
+      }));
     },
-    []
+    [],
   );
 
   const clearFilters = useCallback(() => {

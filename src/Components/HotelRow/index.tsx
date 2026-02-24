@@ -5,11 +5,18 @@ interface HotelRowProps {
   hotel: Hotel;
 }
 
+const formatPrice = (price: number) =>
+  new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  }).format(price);
+
 const HotelRow = memo<HotelRowProps>(({ hotel }) => (
   <tr>
     <td data-label="Name">{hotel.name}</td>
     <td data-label="City">{hotel.city}</td>
-    <td data-label="Price">${hotel.price}</td>
+    <td data-label="Price">{formatPrice(hotel.price)}</td>
     <td data-label="Rating">
       <span aria-hidden="true">⭐ </span>
       {hotel.rating.toFixed(1)}

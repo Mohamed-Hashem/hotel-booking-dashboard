@@ -5,6 +5,13 @@ interface HotelCardProps {
   hotel: Hotel;
 }
 
+const formatPrice = (price: number) =>
+  new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 0,
+  }).format(price);
+
 const HotelCard = memo<HotelCardProps>(({ hotel }) => (
   <article className="hotel-card" aria-labelledby={`hotel-${hotel.id}`}>
     <div className="hotel-card-header">
@@ -19,7 +26,7 @@ const HotelCard = memo<HotelCardProps>(({ hotel }) => (
       {hotel.city}
     </p>
     <p className="price">
-      ${hotel.price}
+      {formatPrice(hotel.price)}
       <span className="per-night">/night</span>
     </p>
     <div className="amenities" aria-label="Amenities">
