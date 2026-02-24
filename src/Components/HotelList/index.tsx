@@ -1,5 +1,4 @@
-import { memo } from "react";
-import type { Hotel, SortField, SortState } from "../../types";
+import React, { memo } from "react";import type { Hotel, SortField, SortState } from "../../types";
 import HotelCard from "../HotelCard";
 import SortIndicator from "../SortIndicator";
 import HotelRow from "../HotelRow";
@@ -10,6 +9,15 @@ interface HotelListProps {
   sortState: SortState;
   onSortFieldChange: (field: SortField) => void;
 }
+
+const handleSortKeyDown =
+  (field: SortField, onSort: (field: SortField) => void) =>
+  (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onSort(field);
+    }
+  };
 
 const HotelList = memo<HotelListProps>(
   ({ hotels, viewMode, sortState, onSortFieldChange }) => {
@@ -30,7 +38,10 @@ const HotelList = memo<HotelListProps>(
             <tr>
               <th
                 scope="col"
+                role="button"
+                tabIndex={0}
                 onClick={() => onSortFieldChange("name")}
+                onKeyDown={handleSortKeyDown("name", onSortFieldChange)}
                 className="sortable"
                 aria-sort={
                   sortState.primary === "name"
@@ -45,7 +56,10 @@ const HotelList = memo<HotelListProps>(
               <th scope="col">City</th>
               <th
                 scope="col"
+                role="button"
+                tabIndex={0}
                 onClick={() => onSortFieldChange("price")}
+                onKeyDown={handleSortKeyDown("price", onSortFieldChange)}
                 className="sortable"
                 aria-sort={
                   sortState.primary === "price"
@@ -59,7 +73,10 @@ const HotelList = memo<HotelListProps>(
               </th>
               <th
                 scope="col"
+                role="button"
+                tabIndex={0}
                 onClick={() => onSortFieldChange("rating")}
+                onKeyDown={handleSortKeyDown("rating", onSortFieldChange)}
                 className="sortable"
                 aria-sort={
                   sortState.primary === "rating"

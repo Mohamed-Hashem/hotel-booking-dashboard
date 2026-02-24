@@ -16,11 +16,11 @@ import {
   matchesAmenities,
 } from "./utilities";
 import DashboardSkeleton from "./Components/DashboardSkeleton";
+import DashboardHeader from "./Components/DashboardHeader";
+import FilterPanel from "./Components/FilterPanel";
+import ControlsPanel from "./Components/ControlsPanel";
 import "./App.css";
 
-const DashboardHeader = lazy(() => import("./Components/DashboardHeader"));
-const FilterPanel = lazy(() => import("./Components/FilterPanel"));
-const ControlsPanel = lazy(() => import("./Components/ControlsPanel"));
 const ResultsSection = lazy(() => import("./Components/ResultsSection"));
 
 const PAGE_SIZE = 10;
@@ -225,7 +225,10 @@ const HotelBookingDashboard: React.FC = () => {
 
   return (
     <Suspense fallback={<DashboardSkeleton />}>
-      <main className="dashboard" role="main">
+      <main className="dashboard">
+        <a href="#results-section" className="skip-link">
+          Skip to results
+        </a>
         <DashboardHeader />
 
         <FilterPanel

@@ -51,7 +51,7 @@ const FilterPanel = memo<FilterPanelProps>(
           {activeFilterCount > 0 && (
             <span
               className="filter-badge"
-              aria-label={`${activeFilterCount} active filters`}
+              aria-label={`${activeFilterCount} active ${activeFilterCount === 1 ? "filter" : "filters"}`}
             >
               {activeFilterCount}
             </span>
@@ -79,9 +79,11 @@ const FilterPanel = memo<FilterPanelProps>(
         />
 
         <div className="filter-group">
-          <label>Price Range</label>
+          <label htmlFor="min-price">Price Range</label>
           <div className="price-inputs">
             <input
+              id="min-price"
+              name="minPrice"
               type="number"
               min={FILTER_PRICE_RANGE.min}
               max={filters.maxPrice}
@@ -92,6 +94,8 @@ const FilterPanel = memo<FilterPanelProps>(
             />
             <span className="price-separator">to</span>
             <input
+              id="max-price"
+              name="maxPrice"
               type="number"
               min={filters.minPrice}
               max={FILTER_PRICE_RANGE.max}
@@ -124,9 +128,11 @@ const FilterPanel = memo<FilterPanelProps>(
         </div>
 
         <div className="filter-group">
-          <label>Availability Dates</label>
+          <label htmlFor="check-in-date">Availability Dates</label>
           <div className="date-inputs">
             <input
+              id="check-in-date"
+              name="startDate"
               type="date"
               value={filters.startDate}
               onChange={onStartDateChange}
@@ -134,6 +140,8 @@ const FilterPanel = memo<FilterPanelProps>(
             />
             <span className="date-separator">to</span>
             <input
+              id="check-out-date"
+              name="endDate"
               type="date"
               value={filters.endDate}
               onChange={onEndDateChange}
@@ -151,8 +159,10 @@ const FilterPanel = memo<FilterPanelProps>(
 
         <div className="filter-group amenities-group">
           <div className="amenities-header">
-            <label>Amenities</label>
+            <label htmlFor="amenity-logic">Amenities</label>
             <select
+              id="amenity-logic"
+              name="amenityLogic"
               value={filters.amenityLogic}
               onChange={onAmenityLogicChange}
               className="logic-select"
@@ -171,6 +181,7 @@ const FilterPanel = memo<FilterPanelProps>(
               <label key={amenity} className="checkbox-label">
                 <input
                   type="checkbox"
+                  name={`amenity-${amenity.toLowerCase()}`}
                   checked={filters.amenities.includes(amenity)}
                   onChange={() => onAmenityToggle(amenity)}
                 />

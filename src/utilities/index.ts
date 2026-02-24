@@ -69,6 +69,13 @@ export const createHotelComparator = (
   };
 };
 
+const sanitizeCSVValue = (value: string): string => {
+  if (/^[=+\-@\t\r]/.test(value)) {
+    return `'${value}`;
+  }
+  return value;
+};
+
 export const exportToCSV = (hotels: Hotel[]): void => {
   const headers = [
     "ID",
@@ -82,11 +89,11 @@ export const exportToCSV = (hotels: Hotel[]): void => {
   ];
   const rows = hotels.map((h) => [
     h.id,
-    `"${h.name}"`,
-    `"${h.city}"`,
+    `"${sanitizeCSVValue(h.name)}"`,
+    `"${sanitizeCSVValue(h.city)}"`,
     h.price,
     h.rating,
-    `"${h.amenities.join(", ")}"`,
+    `"${sanitizeCSVValue(h.amenities.join(", "))}"`,
     h.availability.checkIn,
     h.availability.checkOut,
   ]);

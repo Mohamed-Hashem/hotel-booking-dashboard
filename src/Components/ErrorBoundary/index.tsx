@@ -1,14 +1,12 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-  type ReactNode,
-} from "react";
+import React, { type ReactNode } from "react";
 import "./index.css";
 
 interface ErrorBoundaryProps {
   children: ReactNode;
+}
+
+interface ErrorBoundaryState {
+  errorMessage?: string;
 }
 
 interface FallbackProps {
@@ -38,60 +36,43 @@ const ErrorFallback: React.FC<FallbackProps> = ({
   </div>
 );
 
-const ErrorBoundary: React.FC<ErrorBoundaryProps> = ({ children }) => {
-  const [errorMessage, setErrorMessage] = useState<string | undefined>();
+class ErrorBoundary extends React.Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = {};
+  }
 
-  const handleReset = useCallback(() => {
-    setErrorMessage(undefined);
-  }, []);
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { errorMessage: error.message || "Unexpected error" };
+  }
 
-  const handleReload = useCallback(() => {
+  componentDidCatch(error: Error, info: React.ErrorInfo): void {
+    console.error("ErrorBoundary caught an error", error, info);
+  }
+
+  private handleReset = () => {
+    this.setState({ errorMessage: undefined });
+  };
+
+  private handleReload = () => {
     window.location.reload();
-  }, []);
+  };
 
-  useEffect(() => {
-    const onError = (event: ErrorEvent) => {
-      console.error(
-        "Error boundary caught an error",
-        event.error || event.message
-      );
-      setErrorMessage(
-        event?.error?.message || event.message || "Unexpected error"
-      );
-    };
-
-    const onRejection = (event: PromiseRejectionEvent) => {
-      console.error("Unhandled rejection", event.reason);
-      const reason =
-        event.reason instanceof Error
-          ? event.reason.message
-          : String(event.reason);
-      setErrorMessage(reason || "Unexpected error");
-    };
-
-    window.addEventListener("error", onError);
-    window.addEventListener("unhandledrejection", onRejection);
-
-    return () => {
-      window.removeEventListener("error", onError);
-      window.removeEventListener("unhandledrejection", onRejection);
-    };
-  }, []);
-
-  const content = useMemo(() => {
-    if (errorMessage) {
+  render() {
+    if (this.state.errorMessage) {
       return (
         <ErrorFallback
-          message={errorMessage}
-          onReset={handleReset}
-          onReload={handleReload}
+          message={this.state.errorMessage}
+          onReset={this.handleReset}
+          onReload={this.handleReload}
         />
       );
     }
-    return children;
-  }, [children, errorMessage, handleReload, handleReset]);
-
-  return content;
-};
+    return this.props.children;
+  }
+}
 
 export default ErrorBoundary;
