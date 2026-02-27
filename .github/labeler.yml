@@ -11,3 +11,8 @@ Utilities:
 Docs:
   - "docs/**"
   - "*.md"
+
+Dependencies:
+  - "package.json"
+  - "yarn.lock"
+  - "package-lock.json"

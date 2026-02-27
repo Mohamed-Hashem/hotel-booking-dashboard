@@ -6,7 +6,6 @@ interface EmptyStateProps {
 
 const EmptyState = memo<EmptyStateProps>(({ onClear }) => {
   const ref = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     ref.current?.focus();
   }, []);
