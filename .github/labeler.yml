@@ -1,0 +1,13 @@
+Components:
+  - "src/Components/**"
+
+Hooks:
+  - "src/hooks/**"
+
+Utilities:
+  - "src/utilities/**"
+  - "src/types/**"
+
+Docs:
+  - "docs/**"
+  - "*.md"
